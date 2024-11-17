@@ -4,6 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../../shared/shared.module';
+import { MaterialDesignModule } from '../../shared/material-design/material-design.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { SharedModule } from '../../shared/shared.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    SharedModule
+    SharedModule,
+    MaterialDesignModule
   ]
 })
 export class HomeModule { }

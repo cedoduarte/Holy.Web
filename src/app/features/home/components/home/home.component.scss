@@ -1,0 +1,9 @@
+.home-video-gallery {
+    width: 75%;
+    margin: 0 auto; // horizontally centered
+
+    display: grid;
+    grid-template-rows: repeat(auto-fit, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}

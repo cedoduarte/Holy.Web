@@ -7,14 +7,12 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './youtube-video.component.scss'
 })
 export class YoutubeVideoComponent implements OnInit {
-  @Input() width: number = 560;
-  @Input() height: number = 315;
-  @Input() url: string = "";
+  @Input() embedUrl: string = "";
   public source!: SafeResourceUrl;
 
-  constructor(private readonly sanitizer: DomSanitizer) {}
-  
+  public constructor(private readonly sanitizer: DomSanitizer) {}
+
   public ngOnInit() {
-    this.source = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    this.source = this.sanitizer.bypassSecurityTrustResourceUrl(this.embedUrl);
   }
 }

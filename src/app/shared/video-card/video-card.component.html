@@ -1,0 +1,12 @@
+<mat-card class="video-card-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title>{{ title }}</mat-card-title>
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="video-card-video-container">
+            <app-youtube-video [embedUrl]="embedUrl" />
+        </div>        
+    </mat-card-content>
+</mat-card>
