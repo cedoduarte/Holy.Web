@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HomeModule } from './features/home/home.module';
-
+import { LoginComponent } from './features/auth/login/login.component';
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +12,8 @@ import { HomeModule } from './features/home/home.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+   
   ],
   providers: [
     provideAnimationsAsync()
