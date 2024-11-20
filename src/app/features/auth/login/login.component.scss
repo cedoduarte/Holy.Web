@@ -1,0 +1,419 @@
+$colors: (
+  'primary': #6a11cb,
+  'secondary': #2575fc,
+  'success': #00c853,
+  'info': #0288d1,
+  'white': #ffffff,
+  'black': #000000,
+  'gray-light': #f9f9f9,
+  'text-dark': #333333,
+  'background-dark': #000000,
+  'white-light': rgba(255, 255, 255, 0.8),
+  'white-medium': rgba(255, 255, 255, 0.6),
+  'blue-light': rgba(2, 132, 199, 0.8),
+  'blue-medium': rgba(2, 132, 199, 0.6),
+  'white-full': rgba(255, 255, 255, 1),
+  'white-strong': rgba(255, 255, 255, 0.8),
+  'red-light': rgb(63, 4, 4),
+  'red-medium': rgba(199, 2, 2, 0.5),
+  'purple-light': hsla(267, 100%, 55%, 0.09),
+  'blue-light-full': rgba(255, 255, 255, 0.8),
+  'blue-medium-full': rgba(255, 255, 255, 0.6),
+  'shadow-color': hsla(267, 100%, 55%, 0.09)
+);
+
+// Shadow effects
+$shadow-values: (
+  'soft': 0 1rem 3rem rgba(0, 0, 0, 0.2),
+  'inset': inset 0 2px 4px rgba(0, 0, 0, 0.1),
+  'text': 1px 1px 4px rgba(0, 0, 0, 0.6)
+);
+
+// Animation durations
+$transitions: (
+  'standard': 0.3s ease,
+  'long': 1.5s
+);
+
+// Spacing variables
+$spacing: (
+  'xs': 0.5rem,
+  'sm': 1rem,
+  'md': 1.5rem,
+  'lg': 2rem
+);
+
+// Size variables
+$sizes: (
+  'login-container-width': 26rem,
+  'login-container-height': 60vh,
+  'login-info-width': 27rem,
+  'login-info-height': 27rem,
+  'login-height': 25rem,
+  'stuffed-height': 25%,
+  'login-containerg-width': 50rem,
+  'font-size-large': 2rem,
+  'font-size-medium': 1rem,
+  'font-size-small': 0.75rem,
+  'border-radius-large': 12px,
+  'border-radius-medium': 8px,
+  'border-radius-small': 4px
+);
+
+// Utility mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin glow-effect($color1, $color2, $color3, $color4) {
+  text-shadow: 
+    0 0 10px $color1,
+    0 0 20px $color2,
+    0 0 30px $color3,
+    0 0 40px $color4;
+}
+
+// Animation keyframes
+@mixin keyframes($name) {
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@include keyframes(fadeIn) {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@include keyframes(fadeOut) {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+    display: none;
+  }
+}
+
+@include keyframes(glow) {
+  from {
+    @include glow-effect(
+      map-get($colors, 'white-light'),
+      map-get($colors, 'white-medium'),
+      map-get($colors, 'blue-light'),
+      map-get($colors, 'blue-medium')
+    );
+  }
+  to {
+    @include glow-effect(
+      map-get($colors, 'white-full'),
+      map-get($colors, 'white-strong'),
+      map-get($colors, 'red-light'),
+      map-get($colors, 'red-medium')
+    );
+  }
+}
+
+// Root styles
+:root {
+  --bg-clr: #{map-get($colors, 'background-dark')};
+  --txt-clr: #{map-get($colors, 'white')};
+}
+
+// Grid mixin
+@mixin login-grid($columns, $justify) {
+  display: grid;
+  grid-template-columns: $columns;
+  justify-content: $justify;
+}
+
+// Login container styles
+.login {
+  @include login-grid(70% 30%, center);
+  height: map-get($sizes, 'login-height');
+}
+
+// Login info section styles
+.login-info {
+  @include login-grid(1fr, start);
+  position: relative;
+  background-color: #ff242429;
+  width: map-get($sizes, 'login-info-width');
+  height: map-get($sizes, 'login-info-height');
+  margin-left: map-get($spacing, 'sm');
+  border-radius: map-get($sizes, 'border-radius-large');
+  box-shadow: map-get($shadow-values, 'soft');
+  
+  p {
+    font-size: map-get($sizes, 'font-size-medium');
+    color: map-get($colors, 'text-dark');
+    line-height: 1.5;
+    margin: map-get($spacing, 'xs') 0;
+  }
+}
+
+// Login navigation styles
+.login-nav {
+  @include login-grid(repeat(3, 33%), space-between);
+  align-items: start;
+  margin-left: 10px;
+}
+
+// Stuffed section styles
+.stuffed {
+  height: map-get($sizes, 'stuffed-height');
+  margin-top: 14rem;
+}
+
+// Login footer styles
+.login-footer {
+  @include login-grid(repeat(4, 25%), center);
+  align-items: center;
+}
+
+// Common login container styles
+@mixin login-container-common {
+  background: linear-gradient(135deg, map-get($colors, 'primary'), map-get($colors, 'secondary'));
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn 1.2s ease-out forwards;
+  animation-delay: 4.3s;
+}
+
+// Login container grid styles
+.login-containerg {
+  @include login-container-common;
+  max-width: 90%;
+  width: map-get($sizes, 'login-containerg-width');
+  height: map-get($sizes, 'login-container-height');
+  border-radius: map-get($sizes, 'border-radius-medium');
+  @include login-grid(55% 45%, center);
+  align-items: center;
+  
+  &:hover {
+    box-shadow: 3px 5px 34px 7px map-get($colors, 'shadow-color');
+  }
+}
+
+// Login container styles
+.login-container {
+  @include login-container-common;
+  max-width: 90%;
+  width: map-get($sizes, 'login-container-width');
+  margin: 12vh 10vh 10vh;
+  border-radius: map-get($spacing, 'sm');
+  padding: map-get($spacing, 'lg');
+  box-shadow: map-get($shadow-values, 'soft');
+  transition-duration: map-get($transitions, 'long');
+  
+  &:hover {
+    transition-duration: map-get($transitions, 'long');
+    box-shadow: 3px 5px 34px 7px map-get($colors, 'shadow-color');
+    -webkit-box-shadow: 3px 5px 34px 7px map-get($colors, 'shadow-color');
+    -moz-box-shadow: 3px 5px 34px 7px map-get($colors, 'shadow-color');
+  }
+}
+
+// Login container left styles
+.login-containerl {
+  background-color: map-get($colors, 'black');
+  z-index: -10;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-shadow: map-get($shadow-values, 'soft');
+  border-radius: 0 map-get($spacing, 'xs') map-get($spacing, 'xs') 0;
+}
+
+// Login title styles
+.login-title {
+  font-size: map-get($sizes, 'font-size-large');
+  font-weight: bold;
+  color: map-get($colors, 'white');
+  margin-bottom: map-get($spacing, 'md');
+  text-shadow: map-get($shadow-values, 'text');
+}
+
+// Form control styles
+.form-control {
+  width: 90%;
+  padding: 12px 15px;
+  margin-bottom: map-get($spacing, 'md');
+  border: none;
+  border-radius: map-get($sizes, 'border-radius-medium');
+  font-size: map-get($sizes, 'font-size-medium');
+  color: map-get($colors, 'text-dark');
+  background-color: map-get($colors, 'gray-light');
+  box-shadow: map-get($shadow-values, 'inset');
+  transition: transform map-get($transitions, 'standard'), 
+              box-shadow map-get($transitions, 'standard');
+}
+
+// Button group styles
+.button-group {
+  @include flex-center;
+  justify-content: space-between;
+}
+
+// Base button styles
+@mixin button-base {
+  padding: 12px 20px;
+  font-size: map-get($sizes, 'font-size-medium');
+  font-weight: bold;
+  border: none;
+  border-radius: map-get($sizes, 'border-radius-medium');
+  color: map-get($colors, 'white');
+  cursor: pointer;
+  transition: background map-get($transitions, 'standard'), 
+              transform map-get($transitions, 'standard');
+}
+
+// Button styles
+.btn {
+  @include button-base;
+}
+
+// Login button styles
+.login-btn {
+  @include button-base;
+  background-color: map-get($colors, 'success');
+}
+
+// Home button styles
+.home-btn {
+  @include button-base;
+  background-color: map-get($colors, 'info');
+}
+
+// Layered text styles
+.layered-text {
+  --txt-cta: #{map-get($colors, 'white')};
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-content: center;
+  overflow: hidden;
+  height: auto;
+  opacity: 1;
+  animation: fadeOut 1.2s ease-out forwards;
+  animation-delay: 3s;
+}
+
+// Paragraph styles
+p {
+  color: var(--txt-clr);
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: map-get($sizes, 'font-size-medium');
+  font-weight: 300;
+  line-height: 0.75;
+}
+
+// Shadow paragraph styles
+p.shadow {
+  text-transform: uppercase;
+  font-size: 6rem;
+  position: relative;
+  perspective: 100px;
+  font-weight: 800;
+  color: var(--txt-cta);
+  @include glow-effect(
+    map-get($colors, 'white-light'),
+    map-get($colors, 'white-medium'),
+    map-get($colors, 'blue-light'),
+    map-get($colors, 'blue-medium')
+  );
+  animation: glow 1.5s infinite alternate;
+
+  &::before {
+    content: "WELLCOME";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    scale: 1 -1;
+    opacity: 0.1;
+    color: map-get($colors, 'white');
+    z-index: -1;
+    transform: rotateX(-40deg) scaleX(123%);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: -50%;
+    width: 200%;
+    height: 150%;
+    background: linear-gradient(to bottom, transparent, var(--bg-clr) 85%);
+  }
+}
+
+// Devotions styles
+.devotions {
+  color: map-get($colors, 'white');
+}
+
+// Home container styles
+.home-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    max-width: 90%;
+    margin: 30px auto;
+  }
+  
+  @media (max-width: 480px) {
+    max-width: 95%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+}
+
+// General button styles
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+  &:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+// Additional responsive adjustments
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+}
